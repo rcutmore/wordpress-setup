@@ -41,3 +41,47 @@
         DocumentRoot /usr/share/wordpress
       </VirtualHost>
 
+- name: create os group to manage wordpress
+  become: yes
+  become_method: sudo
+  become_user: root
+  group:
+    name: wordpress
+    state: present
+
+- name: add os user to manage wordpress
+  become: yes
+  become_method: sudo
+  become_user: root
+  user:
+    name: "{{ os_user }}"
+    state: present
+    groups: wordpress
+    append: yes
+
+- name: add apache user to wordpress group
+  become: yes
+  become_method: sudo
+  become_user: root
+  user:
+    name: apache
+    groups: wordpress
+    append: yes
+
+- name: change wordpress directory ownership
+  become: yes
+  become_method: sudo
+  become_user: root
+  file:
+    path: /usr/share/wordpress
+    state: directory
+    recurse: yes
+    owner: "{{ os_user }}"
+    group: wordpress
+
+- name: change wordpress file permissions
+  command: find /usr/share/wordpress -type f -exec chmod 664 {} \;
+
+- name: change wordpress directory permissions
+  command: find /usr/share/wordpress -type d -exec chmod 775 {} \;
+
