@@ -85,3 +85,16 @@
 - name: change wordpress directory permissions
   command: find /usr/share/wordpress -type d -exec chmod 775 {} \;
 
+- name: add database info to wordpress config
+  become: yes
+  become_method: sudo
+  become_user: root
+  replace:
+    path: /usr/share/wordpress/wp-config.php
+    regexp: "{{ item.old_text }}"
+    replace: "{{ item.new_text }}"
+  with_items:
+    - { old_text: 'database_name_here', new_text: '{{ database.name }}' }
+    - { old_text: 'username_here', new_text: '{{ database.username }}' }
+    - { old_text: 'password_here', new_text: '{{ database.password }}' }
+
