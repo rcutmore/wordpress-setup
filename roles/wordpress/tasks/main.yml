@@ -10,3 +10,34 @@
     - epel-release
     - wordpress
 
+- name: update config to allow .htaccess files
+  become: yes
+  become_method: sudo
+  become_user: root
+  replace:
+    path: /etc/httpd/conf.d/wordpress.conf
+    regexp: '^(\s*)AllowOverride\s+Options'
+    replace: '\1AllowOverride FileInfo Options'
+
+- name: update config to allow outside connections
+  become: yes
+  become_method: sudo
+  become_user: root
+  replace:
+    path: /etc/httpd/conf.d/wordpress.conf
+    regexp: '^(\s*)Require\s+local'
+    replace: '\1Require all granted'
+
+- name: update config to add virtual host definition
+  become: yes
+  become_method: sudo
+  become_user: root
+  blockinfile:
+    path: /etc/httpd/conf.d/wordpress.conf
+    block: |
+      <VirtualHost *:80>
+        ServerName www.{{ website_domain }}
+        ServerAlias {{ website_domain }}
+        DocumentRoot /usr/share/wordpress
+      </VirtualHost>
+
