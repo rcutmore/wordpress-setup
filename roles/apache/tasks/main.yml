@@ -1,18 +1,38 @@
 ---
-- name: install apache
+- name: install apache and firewall
   become: yes
   become_method: sudo
   become_user: root
   yum:
-    name: httpd
+    name: "{{ item }}"
     state: latest
+  with_items:
+    - httpd
+    - firewalld
 
-- name: start apache
+- name: start apache and firewall
   become: yes
   become_method: sudo
   become_user: root
   service:
-    name: httpd
+    name: "{{ item }}"
     state: started
     enabled: yes
+  with_items:
+    - httpd
+    - firewalld
+
+- name: configure firewall
+  become: yes
+  become_method: sudo
+  become_user: root
+  firewalld:
+    zone: public
+    service: "{{ item }}"
+    state: enabled
+    permanent: yes
+    immediate: yes
+  with_items:
+    - http
+    - https
 
