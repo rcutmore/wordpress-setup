@@ -16,11 +16,17 @@ Clone this repo to your local machine:
 
 Update variables (replace *[...]*'s):
 
+    vi ./group_vars/all
+    :%s/enter_db_name/[Enter WordPress database name]/g
+    :%s/enter_db_username/[Enter WordPress database user]/g
+    :%s/enter_db_password/[Enter WordPress database user password]/g
+    :x
     vi ./roles/mariadb/vars/main.yml
     :%s/enter_db_root_password/[Enter MariaDB root password here]/g
-    :%s/enter_wordpress_db_name/[Enter WordPress database name here]/g
-    :%s/enter_wordpress_db_user/[Enter database user here]/g
-    :%s/enter_wordpress_db_user_password/[Enter database user password here]/g
+    :x
+    vi ./roles/wordpress/vars/main.yml
+    :%s/enter_os_user/[Enter OS user for managing WordPress]/g
+    :%s/enter_website_domain/[Enter website domain]/g
     :x
 
 To set up development server:
