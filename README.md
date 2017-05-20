@@ -16,9 +16,9 @@ Clone this repo to your local machine:
 
 To set up development server:
 
-    ansible-playbook ./development.yml
+    ansible-playbook --ask-become-pass ./development.yml
 
 To set up production server:
 
-    ansible-playbook ./production.yml
+    ansible-playbook --ask-become-pass ./production.yml
 
