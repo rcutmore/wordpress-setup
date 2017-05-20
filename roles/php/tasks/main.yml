@@ -1,0 +1,13 @@
+---
+- name: install php
+  become: yes
+  become_method: sudo
+  become_user: root
+  yum:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - php
+    - php-gd
+    - php-mysql
+
