@@ -1,0 +1,88 @@
+---
+- name: install mariadb
+  become: yes
+  become_method: sudo
+  become_user: root
+  yum:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - mariadb
+    - mariadb-server
+    - MySQL-python
+
+- name: start mariadb
+  become: yes
+  become_method: sudo
+  become_user: root
+  service:
+    name: mariadb
+    state: started
+    enabled: yes
+
+- name: set root password
+  mysql_user:
+    user: root
+    password: "{{ root_password }}"
+    host: "{{ item }}"
+    login_user: root
+    login_password: ''
+  with_items:
+    - ::1
+    - 127.0.0.1
+    - localhost
+  notify: reload mariadb privileges
+
+- name: add mariadb credential file
+  become: yes
+  become_method: sudo
+  become_user: root
+  template:
+    src: my.cnf.j2
+    dest: /root/.my.cnf
+    owner: root
+    group: root
+    mode: 0600
+
+- name: disallow remote root login
+  become: yes
+  become_method: sudo
+  become_user: root
+  command: 'mysql -ne "{{ item }}"'
+  with_items:
+    - DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('::1', '127.0.0.1', 'localhost')
+
+- name: remove anonymous users
+  mysql_user:
+    user: ''
+    state: absent
+    login_user: root
+    login_password: "{{ root_password }}"
+
+- name: remove test database
+  mysql_db:
+    name: "{{ item }}"
+    state: absent
+    login_user: root
+    login_password: "{{ root_password }}"
+  with_items:
+    - test
+    - test\\_%
+
+- name: create wordpress database
+  mysql_db:
+    name: "{{ wordpress_db }}"
+    state: present
+    login_user: root
+    login_password: "{{ root_password }}"
+
+- name: create wordpress user
+  mysql_user:
+    name: "{{ wordpress_user }}"
+    password: "{{ wordpress_user_password }}"
+    priv: '{{ wordpress_db }}.*:ALL'
+    state: present
+    login_user: root
+    login_password: "{{ root_password }}"
+  notify: reload mariadb privileges
+

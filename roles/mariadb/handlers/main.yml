@@ -1,0 +1,9 @@
+---
+- name: reload mariadb privileges
+  become: yes
+  become_method: sudo
+  become_user: root
+  command: 'mysql -ne "{{ item }}"'
+  with_items:
+    - FLUSH PRIVILEGES
+

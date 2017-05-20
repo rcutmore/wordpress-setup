@@ -1,0 +1,6 @@
+---
+- name: set up development server for wordpress
+  hosts: localhost
+  roles:
+    - mariadb
+
