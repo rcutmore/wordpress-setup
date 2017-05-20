@@ -1,6 +1,3 @@
 ---
 root_password: enter_db_root_password
-wordpress_db: enter_wordpress_db_name
-wordpress_user: enter_wordpress_db_user
-wordpress_user_password: enter_wordpress_db_user_password
 

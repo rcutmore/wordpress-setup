@@ -1,0 +1,6 @@
+---
+database:
+  name: enter_db_name
+  username: enter_db_username
+  password: enter_db_password
+
