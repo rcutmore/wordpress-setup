@@ -98,3 +98,11 @@
     - { old_text: 'username_here', new_text: '{{ database.username }}' }
     - { old_text: 'password_here', new_text: '{{ database.password }}' }
 
+- name: restart apache
+  become: yes
+  become_method: sudo
+  become_user: root
+  service:
+    name: httpd
+    state: restarted
+
