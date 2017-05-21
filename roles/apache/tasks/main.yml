@@ -9,6 +9,7 @@
   with_items:
     - httpd
     - firewalld
+    - libsemanage-python
 
 - name: start apache and firewall
   become: yes
@@ -35,4 +36,13 @@
   with_items:
     - http
     - https
+
+- name: allow apache to send emails
+  become: yes
+  become_method: sudo
+  become_user: root
+  seboolean:
+    name: httpd_can_sendmail
+    state: yes
+    persistent: yes
 
