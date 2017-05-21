@@ -98,6 +98,15 @@
     - { old_text: 'username_here', new_text: '{{ database.username }}' }
     - { old_text: 'password_here', new_text: '{{ database.password }}' }
 
+- name: change database table prefix in wordpress config
+  become: yes
+  become_method: sudo
+  become_user: root
+  replace:
+    path: /usr/share/wordpress/wp-config.php
+    regexp: \$table_prefix\s*=\s*'wp_'
+    replace: $table_prefix = '{{ database.table_prefix }}'
+
 - name: restart apache
   become: yes
   become_method: sudo
