@@ -4,6 +4,11 @@ This is an Ansible playbook for setting up WordPress (using Apache and MariaDB) 
 
 **Getting Started**
 
+Install Ansible:
+
+    sudo yum install epel-release
+    sudo yum install ansible
+
 Update Ansible hosts file (*/etc/ansible/hosts*) with production IP address:
 
     [production]
