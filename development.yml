@@ -3,7 +3,6 @@
   hosts: localhost
   roles:
     - mariadb
-    - php
     - apache
     - wordpress
 
