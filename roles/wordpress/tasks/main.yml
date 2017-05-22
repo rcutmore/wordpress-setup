@@ -107,6 +107,15 @@
     regexp: \$table_prefix\s*=\s*'wp_'
     replace: $table_prefix = '{{ database.table_prefix }}'
 
+- name: add .htaccess file
+  template:
+    src: htaccess.j2
+    dest: /usr/share/wordpress/.htaccess
+    owner: "{{ os_user }}"
+    group: wordpress
+    mode: 0644
+    setype: httpd_sys_content_t
+
 - name: restart apache
   become: yes
   become_method: sudo
