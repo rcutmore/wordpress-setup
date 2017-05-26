@@ -1,0 +1,37 @@
+---
+- name: install prerequisites
+  become: yes
+  become_method: sudo
+  become_user: root
+  yum:
+    name: epel-release
+    state: latest
+
+- name: install fail2ban
+  become: yes
+  become_method: sudo
+  become_user: root
+  yum:
+    name: fail2ban
+    state: latest
+
+- name: add fail2ban settings
+  become: yes
+  become_method: sudo
+  become_user: root
+  template:
+    src: jail.local.j2
+    dest: /etc/fail2ban/jail.local
+    owner: root
+    group: root
+    mode: 0644
+
+- name: start fail2ban
+  become: yes
+  become_method: sudo
+  become_user: root
+  service:
+    name: fail2ban
+    state: started
+    enabled: yes
+

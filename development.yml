@@ -4,6 +4,7 @@
   roles:
     - firewall
     - ssh
+    - fail2ban
     - mariadb
     - apache
     - wordpress

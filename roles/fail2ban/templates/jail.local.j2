@@ -1,0 +1,16 @@
+[DEFAULT]
+# Ban for one hour
+bantime = 3600
+
+# Email settings
+destemail = {{ dest_email }}
+mta = sendmail
+
+# Include log info in emails
+action = %(action_mwl)s
+
+[sshd]
+enable = true
+port = {{ ssh_port }}
+logpath = %(sshd_log)s
+
