@@ -26,12 +26,12 @@ Update variables (replace *[...]*'s):
     :%s/enter_db_username/[Enter WordPress database user]/g
     :%s/enter_db_password/[Enter WordPress database user password]/g
     :%s/enter_db_table_prefix/[Enter WordPress database table prefix]/g
+    :%s/enter_os_user/[Enter OS user for managing WordPress]/g
     :x
     vi ./roles/mariadb/vars/main.yml
     :%s/enter_db_root_password/[Enter MariaDB root password here]/g
     :x
     vi ./roles/wordpress/vars/main.yml
-    :%s/enter_os_user/[Enter OS user for managing WordPress]/g
     :%s/enter_website_domain/[Enter website domain]/g
     :x
 
