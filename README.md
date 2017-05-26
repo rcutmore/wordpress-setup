@@ -16,6 +16,7 @@ Update Ansible hosts file (*/etc/ansible/hosts*) with production IP address:
 
 Clone this repo to your local machine:
 
+    sudo yum install git
     git clone https://github.com/rcutmore/wordpress-setup.git
     cd ./wordpress-setup/
 
