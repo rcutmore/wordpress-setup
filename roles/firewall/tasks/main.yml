@@ -30,6 +30,17 @@
     - http
     - https
 
+- name: disallow ssh traffic on default port
+  become: yes
+  become_method: sudo
+  become_user: root
+  firewalld:
+    port: 22/tcp
+    zone: public
+    state: disabled
+    permanent: yes
+    immediate: no
+
 - name: allow ssh traffic
   become: yes
   become_method: sudo
