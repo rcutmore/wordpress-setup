@@ -1,0 +1,9 @@
+---
+- name: restart sshd
+  become: yes
+  become_method: sudo
+  become_user: root
+  service:
+    name: sshd
+    state: restarted
+

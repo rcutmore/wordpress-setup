@@ -1,0 +1,106 @@
+---
+- name: install prerequisites
+  become: yes
+  become_method: sudo
+  become_user: root
+  yum:
+    name: policycoreutils-python
+    state: latest
+
+- name: install sshd
+  become: yes
+  become_method: sudo
+  become_user: root
+  yum:
+    name: openssh-server
+    state: latest
+
+- name: start sshd
+  become: yes
+  become_method: sudo
+  become_user: root
+  service:
+    name: sshd
+    state: started
+    enabled: yes
+
+- name: update sshd port
+  become: yes
+  become_method: sudo
+  become_user: root
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: '^Port'
+    line: 'Port {{ ssh_port }}'
+  notify: restart sshd
+
+- name: update selinux ssh port
+  become: yes
+  become_method: sudo
+  become_user: root
+  seport:
+    ports: "{{ ssh_port }}"
+    proto: tcp
+    setype: ssh_port_t
+    state: present
+
+- name: use ssh protocol 2
+  become: yes
+  become_method: sudo
+  become_user: root
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: '^Protocol'
+    line: 'Protocol 2'
+  notify: restart sshd
+
+- name: disallow root login
+  become: yes
+  become_method: sudo
+  become_user: root
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: '^PermitRootLogin'
+    line: 'PermitRootLogin no'
+  notify: restart sshd
+
+- name: update allowed users
+  become: yes
+  become_method: sudo
+  become_user: root
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: '^AllowUsers'
+    line: 'AllowUsers {{ os_user }}'
+  notify: restart sshd
+
+- name: disallow empty passwords
+  become: yes
+  become_method: sudo
+  become_user: root
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: '^PermitEmptyPasswords'
+    line: 'PermitEmptyPasswords no'
+  notify: restart sshd
+
+- name: disallow password authentication
+  become: yes
+  become_method: sudo
+  become_user: root
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: '^PasswordAuthentication'
+    line: 'PasswordAuthentication no'
+  notify: restart sshd
+
+- name: disallow hostbased authentication
+  become: yes
+  become_method: sudo
+  become_user: root
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: '^HostbasedAuthentication'
+    line: 'HostbasedAuthentication no'
+  notify: restart sshd
+

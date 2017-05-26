@@ -31,6 +31,9 @@ Update variables (replace *[...]*'s):
     vi ./roles/mariadb/vars/main.yml
     :%s/enter_db_root_password/[Enter MariaDB root password here]/g
     :x
+    vi ./roles/ssh/vars/main.yml
+    :%s/enter_ssh_port/[Enter SSH port]/g
+    :x
     vi ./roles/wordpress/vars/main.yml
     :%s/enter_website_domain/[Enter website domain]/g
     :x
