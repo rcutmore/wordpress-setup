@@ -1,4 +1,15 @@
 ---
+- name: install prerequisites
+  become: yes
+  become_method: sudo
+  become_user: root
+  yum:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - libselinux-python
+    - policycoreutils-python
+
 - name: install wordpress
   become: yes
   become_method: sudo
@@ -84,6 +95,16 @@
 
 - name: change wordpress directory permissions
   command: find /usr/share/wordpress -type d -exec chmod 775 {} \;
+
+- name: update selinux context for wordpress directory
+  become: yes
+  become_method: sudo
+  become_user: root
+  sefcontext:
+    target: /usr/share/wordpress
+    setype: httpd_sys_content_t
+    state: present
+    reload: yes
 
 - name: add database info to wordpress config
   become: yes
