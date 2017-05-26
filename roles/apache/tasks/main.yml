@@ -1,41 +1,28 @@
 ---
-- name: install apache and firewall
+- name: install prerequisites
   become: yes
   become_method: sudo
   become_user: root
   yum:
-    name: "{{ item }}"
+    name: libsemanage-python
     state: latest
-  with_items:
-    - httpd
-    - firewalld
-    - libsemanage-python
 
-- name: start apache and firewall
+- name: install apache
+  become: yes
+  become_method: sudo
+  become_user: root
+  yum:
+    name: httpd
+    state: latest
+
+- name: start apache
   become: yes
   become_method: sudo
   become_user: root
   service:
-    name: "{{ item }}"
+    name: httpd
     state: started
     enabled: yes
-  with_items:
-    - httpd
-    - firewalld
-
-- name: configure firewall
-  become: yes
-  become_method: sudo
-  become_user: root
-  firewalld:
-    zone: public
-    service: "{{ item }}"
-    state: enabled
-    permanent: yes
-    immediate: yes
-  with_items:
-    - http
-    - https
 
 - name: allow apache to send emails
   become: yes

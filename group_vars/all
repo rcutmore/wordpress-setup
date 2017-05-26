@@ -5,4 +5,5 @@ database:
   password: enter_db_password
   table_prefix: enter_db_table_prefix
 os_user: enter_os_user
+ssh_port: enter_ssh_port
 

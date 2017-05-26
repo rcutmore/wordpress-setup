@@ -1,0 +1,43 @@
+---
+- name: install firewalld
+  become: yes
+  become_method: sudo
+  become_user: root
+  yum:
+    name: firewalld
+    state: latest
+
+- name: start firewalld
+  become: yes
+  become_method: sudo
+  become_user: root
+  service:
+    name: firewalld
+    state: started
+    enabled: yes
+
+- name: allow web traffic
+  become: yes
+  become_method: sudo
+  become_user: root
+  firewalld:
+    service: "{{ item }}"
+    zone: public
+    state: enabled
+    permanent: yes
+    immediate: yes
+  with_items:
+    - http
+    - https
+
+- name: allow ssh traffic
+  become: yes
+  become_method: sudo
+  become_user: root
+  firewalld:
+    port: "{{ ssh_port }}/tcp"
+    zone: public
+    state: enabled
+    permanent: yes
+    immediate: yes
+
