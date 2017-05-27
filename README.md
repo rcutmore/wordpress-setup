@@ -1,6 +1,25 @@
 **Overview**
 
-This is an Ansible playbook for setting up WordPress (using Apache and MariaDB) on a CentOS server.
+This contains Ansible playbooks for setting up WordPress (using Apache
+and MariaDB) on a CentOS server. Currently these playbooks are not
+idempotent, they are meant to be run once to set up the server but
+running them multiple times will result in errors.
+
+
+**Prerequisites**
+
+Install and start SSH server on WordPress server:
+
+    sudo yum install openssh-server
+    sudo systemctl start sshd
+
+SSH server should be running with defaults. At the very least it must
+be listening on port 22.
+
+Upload SSH key from Ansible host to WordPress server:
+
+    ssh-keygen -b 4096 -t rsa
+    ssh-copy-id <Enter OS user on WordPress server>@<Enter WordPress server IP address>
 
 **Getting Started**
 
@@ -11,8 +30,8 @@ Install Ansible:
 
 Update Ansible hosts file (*/etc/ansible/hosts*) with production IP address:
 
-    [production]
-    Enter production server IP address here
+    [wordpress-server]
+    <Enter server IP address here> ansible_connection=ssh ansible_ssh_user=<Enter SSH user here> ansible_ssh_pass=<Enter SSH password here>
 
 Clone this repo to your local machine:
 
@@ -20,7 +39,7 @@ Clone this repo to your local machine:
     git clone https://github.com/rcutmore/wordpress-setup.git
     cd ./wordpress-setup/
 
-Update variables (replace *[...]*'s):
+Update variables (replace all *[...]*):
 
     vi ./group_vars/all
     :%s/enter_db_name/[Enter WordPress database name]/g
