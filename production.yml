@@ -1,0 +1,11 @@
+---
+- name: set up production server for wordpress
+  hosts: wordpress-server
+  roles:
+    - firewall
+    - ssh
+    - fail2ban
+    - mariadb
+    - apache
+    - wordpress
+
