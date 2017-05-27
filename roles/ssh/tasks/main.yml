@@ -7,15 +7,7 @@
     name: policycoreutils-python
     state: latest
 
-- name: install sshd
-  become: yes
-  become_method: sudo
-  become_user: root
-  yum:
-    name: openssh-server
-    state: latest
-
-- name: start sshd
+- name: start and enable sshd
   become: yes
   become_method: sudo
   become_user: root
