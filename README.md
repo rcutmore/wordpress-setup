@@ -28,7 +28,7 @@ Install Ansible:
     sudo yum install epel-release
     sudo yum install ansible
 
-Update Ansible hosts file (*/etc/ansible/hosts*) with production IP address:
+Update Ansible hosts file (*/etc/ansible/hosts*) with IP address of WordPress server:
 
     [wordpress-server]
     <Enter server IP address here> ansible_connection=ssh ansible_ssh_user=<Enter SSH user here> ansible_ssh_pass=<Enter SSH password here>
