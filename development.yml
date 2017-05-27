@@ -1,10 +1,9 @@
 ---
 - name: set up development server for wordpress
-  hosts: localhost
+  hosts: wordpress-server
   roles:
     - firewall
     - ssh
-    - fail2ban
     - mariadb
     - apache
     - wordpress
