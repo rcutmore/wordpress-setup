@@ -129,6 +129,9 @@
     replace: $table_prefix = '{{ database.table_prefix }}'
 
 - name: add .htaccess file
+  become: yes
+  become_method: sudo
+  become_user: root
   template:
     src: htaccess.j2
     dest: /usr/share/wordpress/.htaccess
