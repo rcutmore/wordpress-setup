@@ -12,8 +12,11 @@
   become_method: sudo
   become_user: root
   yum:
-    name: httpd
+    name: "{{ item }}"
     state: latest
+  with_items:
+    - httpd
+    - mod_ssl
 
 - name: start apache
   become: yes
