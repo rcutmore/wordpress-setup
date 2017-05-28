@@ -39,18 +39,13 @@
     regexp: '^(\s*)Require\s+local'
     replace: '\1Require all granted'
 
-- name: update config to add virtual host definition
+- name: add apache http virtual host configuration
   become: yes
   become_method: sudo
   become_user: root
-  blockinfile:
-    path: /etc/httpd/conf.d/wordpress.conf
-    block: |
-      <VirtualHost *:80>
-        ServerName www.{{ website_domain }}
-        ServerAlias {{ website_domain }}
-        DocumentRoot /usr/share/wordpress
-      </VirtualHost>
+  template:
+    src: apache-vhost-http.j2
+    dest: /etc/httpd/conf.d/{{ website_domain }}-http.conf
 
 - name: create os group to manage wordpress
   become: yes
