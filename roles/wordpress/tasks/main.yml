@@ -47,14 +47,6 @@
     src: apache-vhost-http.j2
     dest: /etc/httpd/conf.d/{{ website_domain }}-http.conf
 
-- name: add apache https virtual host configuration
-  become: yes
-  become_method: sudo
-  become_user: root
-  template:
-    src: apache-vhost-https.j2
-    dest: /etc/httpd/conf.d/{{ website_domain }}-https.conf
-
 - name: create os group to manage wordpress
   become: yes
   become_method: sudo
