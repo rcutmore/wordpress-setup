@@ -8,5 +8,5 @@
     - mariadb
     - apache
     - wordpress
-    - certbot
+    - tls-certbot
 
