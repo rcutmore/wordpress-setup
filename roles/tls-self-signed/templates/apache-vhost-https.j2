@@ -1,0 +1,10 @@
+<VirtualHost *:443>
+    ServerName www.{{ website_domain }}
+    ServerAlias {{ website_domain }}
+    DocumentRoot /usr/share/wordpress
+
+    SSLEngine on
+    SSLCertificateFile /etc/pki/tls/certs/{{ website_domain }}.crt
+    SSLCertificateKeyFile /etc/pki/tls/private/{{ website_domain }}.key
+</VirtualHost>
+

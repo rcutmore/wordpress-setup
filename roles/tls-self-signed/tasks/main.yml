@@ -1,0 +1,33 @@
+---
+- name: install openssl
+  become: yes
+  become_method: sudo
+  become_user: root
+  yum:
+    name:  openssl
+    state: latest
+
+- name: check for existing certificate
+  stat:
+    path: /etc/pki/tls/certs/{{ website_domain }}.crt
+  register: cert_file
+
+- name: create self-signed certificate pair
+  become: yes
+  become_method: sudo
+  become_user: root
+  command: >
+    openssl req -x509 -batch -nodes -days 365 -newkey rsa:4096
+    -keyout /etc/pki/tls/private/{{ website_domain }}.key
+    -out /etc/pki/tls/certs/{{ website_domain }}.crt
+  when: cert_file.stat.exists == false
+
+- name: add apache https virtual host configuration
+  become: yes
+  become_method: sudo
+  become_user: root
+  template:
+    src: apache-vhost-https.j2
+    dest: /etc/httpd/conf.d/{{ website_domain }}-https.conf
+  notify: restart apache
+ 

@@ -7,4 +7,5 @@
     - mariadb
     - apache
     - wordpress
+    - tls-self-signed
 
