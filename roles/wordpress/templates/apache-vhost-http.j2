@@ -1,6 +1,15 @@
 <VirtualHost *:80>
     ServerName www.{{ website_domain }}
     ServerAlias {{ website_domain }}
-    DocumentRoot /usr/share/wordpress
+
+    # Redirect HTTP to HTTPS.
+    # Apache Redirect would be more appropriate but this allows us
+    # to use the same config on a development machine where we
+    # might only be using IP addresses.
+    # On Apache 2.4.19 or later we can use HTTP_HOST with Redirect
+    # inside a Location or LocationMatch block.
+    RewriteEngine On
+    RewriteCond %{HTTPS} off
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI}
 </VirtualHost>
 
