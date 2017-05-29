@@ -1,0 +1,10 @@
+<VirtualHost *:443>
+    ServerName www.{{ website_domain }}
+    ServerAlias {{ website_domain }}
+    DocumentRoot /usr/share/wordpress
+
+    SSLEngine on
+    SSLCertificateFile /etc/letsencrypt/live/{{ website_domain }}/fullchain.pem
+    SSLCertificateKeyFile /etc/letsencrypt/live/{{ website_domain }}/privkey.pem
+</VirtualHost>
+
