@@ -8,4 +8,5 @@
     - mariadb
     - apache
     - wordpress
+    - certbot
 
