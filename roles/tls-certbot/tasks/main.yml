@@ -13,7 +13,7 @@
 - name: check for existing certificate
   stat:
     path: /etc/letsencrypt/live/{{ website_domain }}/fullchain.pem
-    register: cert_file
+  register: cert_file
 
 - name: generate certificate if needed
   become: yes
