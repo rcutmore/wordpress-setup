@@ -51,9 +51,6 @@ Update variables (replace all *[...]*):
     :%s/enter_ssh_port/[Enter SSH port]/g
     :%s/enter_website_domain/[Enter website domain]/g
     :x
-    vi ./roles/fail2ban/vars/main.yml
-    :%s/enter_dest_email/[Enter destination email address]/g
-    :x
     vi ./roles/mariadb/vars/main.yml
     :%s/enter_db_root_password/[Enter MariaDB root password here]/g
     :x
