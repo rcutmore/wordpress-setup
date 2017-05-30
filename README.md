@@ -46,6 +46,7 @@ Update variables (replace all *[...]*):
     :%s/enter_db_username/[Enter WordPress database user]/g
     :%s/enter_db_password/[Enter WordPress database user password]/g
     :%s/enter_db_table_prefix/[Enter WordPress database table prefix]/g
+    :%s/enter_notification_email/[Enter notification email address]/g
     :%s/enter_os_user/[Enter OS user for managing WordPress]/g
     :%s/enter_ssh_port/[Enter SSH port]/g
     :%s/enter_website_domain/[Enter website domain]/g

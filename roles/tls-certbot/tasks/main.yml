@@ -20,7 +20,9 @@
   become_method: sudo
   become_user: root
   command: >
-    certbot --apache certonly --noninteractive
+    certbot --apache certonly
+    --noninteractive --agree-tos
+    -m {{ notification_email }}
     --cert-name {{ website_domain }}
     -d {{ website_domain }}
     -d www.{{ website_domain }}
