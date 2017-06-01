@@ -8,13 +8,15 @@ running them multiple times will result in errors.
 
 **Prerequisites**
 
+SELinux must be enabled.
+
 Install and start SSH server on WordPress server:
 
     sudo yum install openssh-server
     sudo systemctl start sshd
 
 SSH server should be running with defaults. At the very least it must
-be listening on port 22.
+be listening on port 22 and password authentication must be enabled.
 
 Upload SSH key from Ansible host to WordPress server:
 
