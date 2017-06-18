@@ -4,7 +4,8 @@
     DocumentRoot /usr/share/wordpress
 
     SSLEngine on
-    SSLCertificateFile /etc/letsencrypt/live/{{ website_domain }}/fullchain.pem
+    SSLCertificateFile /etc/letsencrypt/live/{{ website_domain }}/cert.pem
     SSLCertificateKeyFile /etc/letsencrypt/live/{{ website_domain }}/privkey.pem
+    SSLCertificateChainFile /etc/letsencrypt/live/{{ website_domain }}/chain.pem
 </VirtualHost>
 
